@@ -21,10 +21,17 @@ class contaBancaria:
     def depositar(self, deposito):
         self.adicionarNoHistorico('Depósito',deposito)
         self.saldo += deposito
+        return deposito
 
     def sacar(self,saque):
         self.adicionarNoHistorico('Saque',saque)
         self.saldo -= saque
+
+    def transferir(self,recebe,valor):
+        self.saldo -= valor
+        self.adicionarNoHistorico('Transferência (-)',valor)
+        recebe.saldo += valor
+        recebe.adicionarNoHistorico('Transferência (+)',valor)
 
     def getTipodeconta(self):
         return self.tipoDeConta

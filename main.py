@@ -1,5 +1,7 @@
-from pessoa import *
-from contaBancaria import *
+from Model.contaBancaria import contaBancaria
+from Model.usuario import Usuario
+from Model.funcionario import Funcionario
+
 
 def existeUsuarioCadastrado(cpf,senha,listaPessoas):
     for pessoa in listaPessoas:
@@ -12,11 +14,14 @@ def existeUsuarioCadastrado(cpf,senha,listaPessoas):
     
 listaPessoas = list()
 conta = contaBancaria(4500.00,'Premium',None)
+conta2 = contaBancaria(0,'Standard',None)
 eduardo = Usuario('Eduardo','a','1','M', 17,conta)
+micael = Usuario('Micael','c','3','M', 20,conta2)
 manuella = Funcionario('Manuella','b','2','F',17,listaPessoas)
 print('Olá, Bem-Vindo(a) ao Banco')
 listaPessoas.append(eduardo)
 listaPessoas.append(manuella)
+listaPessoas.append(micael)
 
 def main():
     while True:
@@ -35,7 +40,7 @@ def main():
                 senha = input('Insira novamente sua senha: ')
                 login = existeUsuarioCadastrado(cpf, senha, listaPessoas)
             if cpf != '0':
-                login.abrirTela()
+                login.abrirTela(listaPessoas)
         else:
             break
 if __name__  == '__main__':
