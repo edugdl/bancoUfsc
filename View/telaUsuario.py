@@ -4,7 +4,7 @@ class telaUsuario:
     def situacaoAtual(usuario):
         print(47 * '-')
         print('Status =', usuario.getContaBancaria().getStatus())
-        print('Saldo = R$', usuario.getContaBancaria().getSaldo())
+        print('Saldo = R$', usuario.getContaBancaria().getSaldoFormatado())
         print(47 * '-')
 
     def tela(usuario,listaPessoas):

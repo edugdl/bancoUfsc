@@ -1,15 +1,26 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class contaBancaria:
-    def __init__(self, saldo, tipoDeConta, Acoes):
+    def __init__(self, saldo):
         self.saldo = saldo
-        self.tipoDeConta = tipoDeConta
-        self.Acoes = Acoes
         self.historico = []
+        self.dataUltimaAtualizacao = datetime.now()
+
+    def atualizar(self):
+        diferenca = int(((datetime.now() - self.dataUltimaAtualizacao).seconds)/60)
+        if diferenca > 0:
+            self.saldo *= 1.005 ** diferenca
+            self.dataUltimaAtualizacao += timedelta(minutes=diferenca)
+        return self.saldo
 
     def getSaldo(self):
+        self.atualizar()
         return self.saldo
     
+    def getSaldoFormatado(self):
+        saldo = f'{self.getSaldo():.2f}'
+        return saldo
+
     def adicionarNoHistorico(self,acaoV,valorV):
         dataAtual = datetime.now()
         dataHora = dataAtual.strftime('%d/%m/%Y às %H:%M:%S')
@@ -19,33 +30,26 @@ class contaBancaria:
         self.historico.insert(0,dicionarioHistorico)
 
     def depositar(self, deposito):
+        self.atualizar()
         self.adicionarNoHistorico('Depósito',deposito)
         self.saldo += deposito
         return deposito
 
     def sacar(self,saque):
+        self.atualizar()
         self.adicionarNoHistorico('Saque',saque)
         self.saldo -= saque
 
     def transferir(self,recebe,valor):
+        self.atualizar()
+        recebe.atualizar()
         self.saldo -= valor
         self.adicionarNoHistorico('Transferência (-)',valor)
         recebe.saldo += valor
         recebe.adicionarNoHistorico('Transferência (+)',valor)
 
-    def getTipodeconta(self):
-        return self.tipoDeConta
-
-    def setTipodeconta(self, tipoDeConta):
-        self.tipoDeConta = tipoDeConta
-
-    def getAcoes(self):
-        return self.Acoes
-
-    def setAcoes(self, Acoes):
-        self.Acoes = Acoes
-
     def getStatus(self):
+        self.atualizar()
         if self.saldo > 0:
             return 'Positiva'
         elif self.saldo == 0:

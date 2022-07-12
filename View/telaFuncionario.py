@@ -45,7 +45,7 @@ class telaFuncionario:
                     print('-'*47)
             elif acao == 3:
                 cpf = input('Insira o CPF da conta que deseja remover: ')
-                usuario = usuarioController.acharPeloCpf(listaPessoas,cpf)
+                usuario = usuarioController.acharPeloCpf(cpf,listaPessoas)
                 verificar = input(f'Deseja realmente remover a conta de {usuario.getNome()} ? (S/N) ').upper()
                 if verificar == 'S':
                     listaPessoas.remove(usuario)

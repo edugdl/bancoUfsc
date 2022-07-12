@@ -13,8 +13,8 @@ def existeUsuarioCadastrado(cpf,senha,listaPessoas):
         return False
     
 listaPessoas = list()
-conta = contaBancaria(4500.00,'Premium',None)
-conta2 = contaBancaria(0,'Standard',None)
+conta = contaBancaria(10000)
+conta2 = contaBancaria(1000)
 eduardo = Usuario('Eduardo','a','1','M', 17,conta)
 micael = Usuario('Micael','c','3','M', 20,conta2)
 manuella = Funcionario('Manuella','b','2','F',17,listaPessoas)
