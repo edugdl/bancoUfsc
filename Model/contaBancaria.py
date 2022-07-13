@@ -11,7 +11,9 @@ class contaBancaria:
     def atualizar(self):
         diferenca = int(((datetime.now() - self.dataUltimaAtualizacao).seconds)/60)
         if diferenca > 0:
-            self.saldo *= 1.005 ** diferenca
+            self.saldo -= 5
+            if self.saldo < 0:
+                self.saldo *= 1.01 ** diferenca
             self.dataUltimaAtualizacao += timedelta(minutes=diferenca)
         return self.saldo
 
@@ -63,9 +65,9 @@ class contaBancaria:
 
     def getStatus(self):
         self.atualizar()
-        if self.saldo > 0:
+        if float(self.getSaldoFormatado()) > 0:
             return 'Positiva'
-        elif self.saldo == 0:
+        elif float(self.getSaldoFormatado()) == 0:
             return 'Zerada'
         return 'Negativa'
 
@@ -78,7 +80,11 @@ class contaPoupanca(contaBancaria):
         super().__init__(saldo, nomeConta)
 
     def atualizar(self):
-        ...
+        diferenca = int(((datetime.now() - self.dataUltimaAtualizacao).seconds) / 60)
+        if diferenca > 0:
+            self.saldo *= 1.005 ** diferenca
+            self.dataUltimaAtualizacao += timedelta(minutes=diferenca)
+        return self.saldo
 
     def getTipoConta(self):
         return "Conta Poupança"

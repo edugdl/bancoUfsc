@@ -1,4 +1,4 @@
-from Controller.contaBancariaController import *
+import Controller.contaBancariaController as contaBancariaController
 from Controller.usuarioController import *
 
 
@@ -60,7 +60,17 @@ class telaUsuario:
                     print(f'Saque de R$ {valor} concluído com sucesso!')
                     telaUsuario.situacaoAtual(contaEscolhida)
             elif acao == 4:
-                ...
+                contaEscolhida = contaBancariaController.selecionarConta(
+                    usuario)
+                if contaEscolhida is None:
+                    print('Peça a um dos atendentes para criar uma conta em seu nome')
+                    break
+                valorEmprestimo = input('Digite quanto quer pedir de empréstimo pelo banco: ')
+                salario = input(f'Seu salário continua sendo {usuario.getSalario()} ? (S/N): ').upper()
+                salario = usuarioController.verificarSN(salario)
+                if salario == 'N':
+                    salario = input('Digite seu novo salário: ')
+                    usuario.setSalario(salario)
             elif acao == 5:
                 contaEscolhida = contaBancariaController.selecionarConta(
                     usuario)
@@ -73,18 +83,18 @@ class telaUsuario:
                     pessoaRecebe, listaPessoas)
                 if recebe is None:
                     print('Usuário não encontrado')
-                    break
-                valor = float(
-                    input('Insira o valor o qual deseja transferir: '))
-                transferencia = contaBancariaController.transferir(
-                    contaEscolhida, recebe, valor)
-                if transferencia:
-                    print(
-                        f'Transferência de {usuario.getNome()} para {transferencia.getNome()} no valor de R$ {valor:.2f} concluída com sucesso!')
-                elif transferencia is None:
-                    print('Saldo na conta insuficiente')
                 else:
-                    break
+                    valor = float(
+                        input('Insira o valor o qual deseja transferir: '))
+                    transferencia = contaBancariaController.transferir(
+                        contaEscolhida, recebe, valor)
+                    if transferencia:
+                        print(
+                            f'Transferência de {usuario.getNome()} para {transferencia.getNome()} no valor de R$ {valor:.2f} concluída com sucesso!')
+                    elif transferencia is None:
+                        print('Saldo na conta insuficiente')
+                    else:
+                        print('A pessoa selecionada não possui uma conta')
             elif acao == 6:
                 contaEscolhida = contaBancariaController.selecionarConta(
                     usuario)

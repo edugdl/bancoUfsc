@@ -32,6 +32,11 @@ class usuarioController:
                 'Qual o tipo de conta? C - Corrente, P - Poupança').upper()
         return conta
 
+    def verificarSN(opcao):
+        while opcao not in ['S','N']:
+            opcao = input('Digite corretamente a opção (S/N): ').upper()
+        return opcao
+
     def acharPeloCpf(cpf, listaPessoas):
         for pessoa in listaPessoas:
             if pessoa.getCpf() == cpf:

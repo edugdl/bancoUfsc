@@ -1,5 +1,5 @@
 from datetime import datetime
-from Controller.contaBancariaController import contaBancariaController
+import Controller.contaBancariaController as contaBancariaController
 from Controller.usuarioController import usuarioController
 from Model.contaBancaria import contaBancaria
 from Model.usuario import Usuario
@@ -13,7 +13,9 @@ class telaFuncionario:
             print('3 - Remover a conta de um usuário (total)')
             print('4 - Remover uma (1) conta bancária do usuário')
             print('5 - Abrir uma conta bancária para o usuário')
-            print('6 - Logout ')
+            print('6 - Verificar a lista de Clientes')
+            print('7 - Ver dados cadastrais de um usuário')
+            print('8 - Logout ')
             acao = int(input('O que deseja fazer? '))
             if acao == 1:
                 print('Insira seus dados abaixo:')
@@ -25,11 +27,12 @@ class telaFuncionario:
                 idade = int(input('Digite a idade do usuário: '))
                 if usuarioController.verificarIdade(idade) is None:
                     break
+                salario = float(input('Qual é seu salário mensal atualmente?: '))
                 senha = input('Digite a senha do usuário: ')
                 confirmarSenha = input(
                     'Confirme novamente a senha do usuário por favor: ')
                 senha = usuarioController.verificarSenha(senha, confirmarSenha)
-                cadastro = Usuario(nome, cpf, senha, genero, idade)
+                cadastro = Usuario(nome, cpf, senha, genero, idade,salario)
                 listaPessoas.append(cadastro)
                 print('Cadastro concluído com sucesso')
             elif acao == 2:
@@ -64,9 +67,7 @@ class telaFuncionario:
                 else:
                     verificar = input(
                         f'Deseja realmente remover a conta de {usuario.getNome()} ? (S/N) ').upper()
-                    while verificar not in ['S','N']:
-                        print('Digite corretamente por favor')
-                        verificar = input(f'Deseja realmente remover a conta de {usuario.getNome()} ? (S/N) ').upper()
+                    verificar = usuarioController.verificarSN(verificar)
                     if verificar == 'S':
                         listaPessoas.remove(usuario)
                         print('Conta removida com sucesso!')
@@ -79,6 +80,7 @@ class telaFuncionario:
                 else:
                     contaEscolhida = contaBancariaController.selecionarConta(usuario)
                     verificar = input(f'Deseja realmente remover a conta {contaEscolhida.getNomeConta()} do usuário {usuario.getNome()} ? (S/N) ').upper()
+                    verificar = usuarioController.verificarSN(verificar)
                     if verificar == 'S':
                         usuarioController.removerContaBancaria(usuario,contaEscolhida)
                         print('Conta removida com sucesso!')
@@ -101,4 +103,19 @@ class telaFuncionario:
                         f'Conta criada com sucesso para o usuário {usuario.getNome()}!')
                     contaBancariaController.criarConta(usuario, tipoConta, saldo, nomeConta)
             elif acao == 6:
+                for pessoa in listaPessoas:
+                    print(f'Nome: {pessoa.getNome()}, Cpf: {pessoa.getCpf()}\n')
+            elif acao == 7:
+                cpf = input('Digite o CPF do usuário que voce quer ver os dados: ')
+                usuario = usuarioController.acharPeloCpf(cpf, listaPessoas)
+                if usuario is None:
+                    print('Usuário não encontrado')
+                else:
+                    print(47 * '-')
+                    print(f'Nome: {usuario.getNome()}\n'
+                          f'CPF: {usuario.getCpf()}\n'
+                          f'Genero: {usuario.getGenero()}\n'
+                          f'Salário mensal: {usuario.getSalario()}')
+                    print(47 * '-')
+            elif acao == 8:
                 break

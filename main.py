@@ -3,8 +3,8 @@ from Model.usuario import Usuario
 from Model.funcionario import Funcionario
 
 
-def existeUsuarioCadastrado(cpf, senha, listaPessoas):
-    for pessoa in listaPessoas:
+def existeUsuarioCadastrado(cpf, senha, listaGeral):
+    for pessoa in listaGeral:
         if pessoa.cpf == cpf and pessoa.senha == senha:
             print(f'Olá {pessoa.nome}')
             return pessoa
@@ -14,18 +14,23 @@ def existeUsuarioCadastrado(cpf, senha, listaPessoas):
 
 
 listaPessoas = list()
+listaGeral = list()
 conta = contaBancaria(4500.00, 'conta1')
 conta2 = contaBancaria(0, 'conta2')
 conta3 = contaPoupanca(1000, 'testePoupanca')
-eduardo = Usuario('Eduardo', 'a', '1', 'M', 17)
+conta4 = contaPoupanca(2000, "micaelGostosoRendeDinheiro")
+eduardo = Usuario('Eduardo', 'a', '1', 'M', 18, 1000)
 eduardo.adicionarContaBancaria(conta)
 eduardo.adicionarContaBancaria(conta3)
-micael = Usuario('Micael', 'c', '3', 'M', 20)
+micael = Usuario('Micael', 'c', '3', 'M', 20, 2000)
 micael.adicionarContaBancaria(conta2)
-manuella = Funcionario('Manuella', 'b', '2', 'F', 17, listaPessoas)
-print('Olá, Bem-Vindo(a) ao Banco')
+micael.adicionarContaBancaria(conta4)
+manuella = Funcionario('Manuella', 'b', '2', 'F', 18)
+print('Olá, Bem-vindo(a) ao Banco')
+listaGeral.append(eduardo)
+listaGeral.append(manuella)
+listaGeral.append(micael)
 listaPessoas.append(eduardo)
-listaPessoas.append(manuella)
 listaPessoas.append(micael)
 
 
@@ -37,17 +42,17 @@ def main():
         if acao == 1:
             cpf = input('Insira seu cpf: ')
             senha = input('Insira sua senha: ')
-            login = existeUsuarioCadastrado(cpf, senha, listaPessoas)
+            login = existeUsuarioCadastrado(cpf, senha, listaGeral)
             while not login:
                 print('Caso queira sair insira o cpf como 0')
                 cpf = input('Insira novamente seu cpf: ')
                 if cpf == '0':
                     break
                 senha = input('Insira novamente sua senha: ')
-                login = existeUsuarioCadastrado(cpf, senha, listaPessoas)
+                login = existeUsuarioCadastrado(cpf, senha, listaGeral)
             if cpf != '0':
                 login.abrirTela(listaPessoas)
-        else:
+        elif acao == 2:
             break
 
 
