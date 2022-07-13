@@ -6,7 +6,7 @@ class telaUsuario:
     def situacaoAtual(contaEscolhida):
         print(47 * '-')
         print('Status =', contaEscolhida.getStatus())
-        print('Saldo = R$', contaEscolhida.getSaldo())
+        print('Saldo = R$', contaEscolhida.getSaldoFormatado())
         print('Tipo de conta = ', contaEscolhida.getTipoConta())
         print(47 * '-')
 
@@ -24,10 +24,16 @@ class telaUsuario:
             if acao == 1:
                 contaEscolhida = contaBancariaController.selecionarConta(
                     usuario)
+                if contaEscolhida is None:
+                    print('Peça a um dos atendentes para criar uma conta em seu nome')
+                    break
                 telaUsuario.situacaoAtual(contaEscolhida)
             elif acao == 2:
                 contaEscolhida = contaBancariaController.selecionarConta(
                     usuario)
+                if contaEscolhida is None:
+                    print('Peça a um dos atendentes para criar uma conta em seu nome')
+                    break
                 valor = float(input('Insira quanto deseja depositar: '))
                 retornoDeposito = contaBancariaController.depositar(
                     contaEscolhida, valor)
@@ -40,6 +46,9 @@ class telaUsuario:
             elif acao == 3:
                 contaEscolhida = contaBancariaController.selecionarConta(
                     usuario)
+                if contaEscolhida is None:
+                    print('Peça a um dos atendentes para criar uma conta em seu nome')
+                    break
                 valor = float(input('Insira quanto deseja sacar: '))
                 retornoSaque = contaBancariaController.sacar(
                     contaEscolhida, valor)
@@ -55,6 +64,9 @@ class telaUsuario:
             elif acao == 5:
                 contaEscolhida = contaBancariaController.selecionarConta(
                     usuario)
+                if contaEscolhida is None:
+                    print('Peça a um dos atendentes para criar uma conta em seu nome')
+                    break
                 pessoaRecebe = input(
                     'Insira o CPF da pessoa a qual deseja realizar a transferência: ')
                 recebe = usuarioController.acharPeloCpf(
@@ -68,25 +80,26 @@ class telaUsuario:
                     contaEscolhida, recebe, valor)
                 if transferencia:
                     print(
-                        f'Transferência de {usuario.getNome()} para {transferencia.getNome()} no valor de R$ {valor} concluída com sucesso!')
+                        f'Transferência de {usuario.getNome()} para {transferencia.getNome()} no valor de R$ {valor:.2f} concluída com sucesso!')
                 elif transferencia is None:
                     print('Saldo na conta insuficiente')
                 else:
-                    print('Usuário não encontrado')
+                    break
             elif acao == 6:
-                usuario = usuarioController.acharPeloCpf(
-                    usuario.getCpf(), listaPessoas)
-                print('-'*47)
-                print(f'Seu histórico\n')
                 contaEscolhida = contaBancariaController.selecionarConta(
                     usuario)
+                if contaEscolhida is None:
+                    print('Peça a um dos atendentes para criar uma conta em seu nome')
+                    break
                 historico = contaEscolhida.getHistorico()
+                print('-'*47)
+                print(f'Histórico de {contaEscolhida.getNomeConta()}\n')
                 if len(historico) == 0:
                     print('Ainda não foi realizada nenhuma transação')
                 else:
                     for hist in historico:
                         print(
-                            f"Foi realizado um(a) {hist['acao']} no valor de R$ {hist['valor']} no dia {hist['data']}")
+                            f"Foi realizado um(a) {hist['acao']} no valor de R$ {hist['valor']:.2f} no dia {hist['data']}")
                 print('-'*47)
             elif acao == 7:
                 print(47 * '-')

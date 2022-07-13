@@ -2,7 +2,7 @@ class usuarioController:
 
     def verificarGenero(genero):
         while genero not in ['M', 'F']:
-            genero = input('Insira seu gênero corretamente: ')
+            genero = input('Insira o gênero  do usuário corretamente: ').upper()
         return genero
 
     def verificarCpf(listaPessoas, cpf):
@@ -21,8 +21,8 @@ class usuarioController:
     def verificarSenha(senha, confirmarSenha):
         while senha != confirmarSenha:
             print('Senha e Confirmar Senha são diferentes!')
-            senha = input('Digite sua senha: ')
-            confirmarSenha = input('Confirme novamente sua senha por favor: ')
+            senha = input('Digite a senha do usuário: ')
+            confirmarSenha = input('Confirme novamente a senha do usuário por favor: ')
         return senha
 
     def verificarConta(conta):

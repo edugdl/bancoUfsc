@@ -16,6 +16,6 @@ class Funcionario(Pessoa):
     def abrirTela(self,listaPessoas):
         telaFuncionario.tela(self,listaPessoas)
         
-    def cadastrarUsuario(self,nome,cpf,senha,genero,idade,contaBancaria):
-        pessoaCriada = Usuario(nome,cpf,senha,genero,idade,contaBancaria)
+    def cadastrarUsuario(self,nome,cpf,senha,genero,idade):
+        pessoaCriada = Usuario(nome,cpf,senha,genero,idade)
         return pessoaCriada

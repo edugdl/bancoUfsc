@@ -17,11 +17,13 @@ class contaBancariaController:
     def transferir(manda, recebePessoa, valor):
         print('Escolha abaixo a conta que irá receber o dinheiro')
         recebe = contaBancariaController.selecionarConta(recebePessoa)
+        if recebe is None:
+            print('A pessoa selecionada não possui uma conta')
+            return False
         if manda.getSaldo() < valor:
             return None
-        else:
-            manda.transferir(recebe, valor)
-            return recebePessoa
+        manda.transferir(recebe, valor)
+        return recebePessoa
 
     def criarConta(usuario, tipoDeConta, saldo, nomeDaConta):
         if tipoDeConta == 'C':
@@ -31,7 +33,9 @@ class contaBancariaController:
         usuario.adicionarContaBancaria(novaConta)
 
     def selecionarConta(usuario):
-        if len(usuario.getListaContaBancaria()) == 1:
+        if len(usuario.getListaContaBancaria()) == 0:
+            return None
+        elif len(usuario.getListaContaBancaria()) == 1:
             return usuario.getListaContaBancaria()[0]
         for i, contaBancaria in enumerate(usuario.getListaContaBancaria()):
             print(f'{i+1} - {contaBancaria.getNomeConta()}')
