@@ -9,7 +9,7 @@ class Usuario(Pessoa):
     def getListaContaBancaria(self):
         return self.contaBancaria
 
-    def setContaBancaria(self, contaBancaria):
+    def setListaContaBancaria(self, contaBancaria):
         self.contaBancaria = contaBancaria
 
     def adicionarContaBancaria(self, contaBancaria):

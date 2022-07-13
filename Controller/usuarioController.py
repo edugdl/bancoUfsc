@@ -32,11 +32,6 @@ class usuarioController:
                 'Qual o tipo de conta? C - Corrente, P - Poupança').upper()
         return conta
 
-    def cadastrarUsuario(funcionario, nome, cpf, senha, genero, idade):
-        usuarioCadastrado = funcionario.cadastrarUsuario(
-            nome, cpf, senha, genero, idade)
-        return usuarioCadastrado
-
     def acharPeloCpf(cpf, listaPessoas):
         for pessoa in listaPessoas:
             if pessoa.getCpf() == cpf:
@@ -44,5 +39,7 @@ class usuarioController:
         else:
             return None
 
-
-
+    def removerContaBancaria(usuario,contaEscolhida):
+        listaConta = usuario.getListaContaBancaria()
+        listaConta.remove(contaEscolhida)
+        usuario.setListaContaBancaria(listaConta)
