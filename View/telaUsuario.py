@@ -64,6 +64,8 @@ class telaUsuario:
                     usuario)
                 if type(contaEscolhida).__name__ == 'contaPoupanca':
                     print('Não é possível realizar empréstimo em contas poupança!')
+                elif contaEscolhida.emprestimoAtual:
+                    print('Não é possível realizar empréstimo com outro em andamento')
                 elif contaEscolhida is None:
                     print('Peça a um dos atendentes para criar uma conta em seu nome')
                     break
