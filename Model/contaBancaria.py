@@ -7,10 +7,18 @@ class contaBancaria:
         self.historico = []
         self.nomeConta = nomeConta
         self.dataUltimaAtualizacao = datetime.now()
+        self.emprestimoAtual = False
 
     def atualizar(self):
         diferenca = int(((datetime.now() - self.dataUltimaAtualizacao).seconds)/60)
         if diferenca > 0:
+            if self.emprestimoAtual:
+                valorDebito = self.emprestimoAtual['valorInicial'] * (1.03 ** self.emprestimoAtual['vezAtual'])
+                self.adicionarNoHistorico('Débito empréstimo', valorDebito)
+                self.saldo -= valorDebito
+                self.emprestimoAtual['vezAtual'] += 1
+                if self.emprestimoAtual['vezAtual'] == self.emprestimoAtual['vezes']:
+                    self.emprestimoAtual = False
             self.saldo -= 5
             if self.saldo < 0:
                 self.saldo *= 1.01 ** diferenca
@@ -73,6 +81,12 @@ class contaBancaria:
 
     def getHistorico(self):
         return self.historico
+
+    def emprestimo(self,emprestimo):
+        emprestimoConta = emprestimo['valorInicial'] * emprestimo['vezes']
+        self.adicionarNoHistorico('Empréstimo', emprestimoConta)
+        self.saldo += emprestimoConta
+        self.emprestimoAtual = emprestimo
 
 
 class contaPoupanca(contaBancaria):

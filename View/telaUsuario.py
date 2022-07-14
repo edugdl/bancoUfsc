@@ -62,15 +62,26 @@ class telaUsuario:
             elif acao == 4:
                 contaEscolhida = contaBancariaController.selecionarConta(
                     usuario)
-                if contaEscolhida is None:
+                if type(contaEscolhida).__name__ == 'contaPoupanca':
+                    print('Não é possível realizar empréstimo em contas poupança!')
+                elif contaEscolhida is None:
                     print('Peça a um dos atendentes para criar uma conta em seu nome')
                     break
-                valorEmprestimo = input('Digite quanto quer pedir de empréstimo pelo banco: ')
-                salario = input(f'Seu salário continua sendo {usuario.getSalario()} ? (S/N): ').upper()
-                salario = usuarioController.verificarSN(salario)
-                if salario == 'N':
-                    salario = input('Digite seu novo salário: ')
-                    usuario.setSalario(salario)
+                else:
+                    valorEmprestimo = float(input('Digite o valor do empréstimo: '))
+                    salario = input(f'Seu salário continua sendo {usuario.getSalario()} ? (S/N): ').upper()
+                    salario = usuarioController.verificarSN(salario)
+                    if salario == 'N':
+                        salario = float(input('Digite seu novo salário: '))
+                        usuario.setSalario(salario)
+                    listaEmprestimo = contaBancariaController.verificarEmprestimo(valorEmprestimo,usuario.getSalario())
+                    if len(listaEmprestimo) == 0:
+                        print(f'Não é possível realizar um empréstimo de valor R$ {valorEmprestimo:.2f} em até 12x')
+                    else:
+                        for i,emprestimo in enumerate(listaEmprestimo):
+                            print(f'{i+1} - {emprestimo["vezes"]}x resultado em um total de {emprestimo["total"]:.2f}')
+                        escolhaEmprestimo = int(input('Escolha uma opção de empréstimo: '))
+                        contaBancariaController.emprestimo(contaEscolhida,listaEmprestimo[escolhaEmprestimo-1])
             elif acao == 5:
                 contaEscolhida = contaBancariaController.selecionarConta(
                     usuario)
