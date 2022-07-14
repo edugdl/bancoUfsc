@@ -39,3 +39,20 @@ def selecionarConta(usuario):
     contaEscolhida = int(
         input('Digite a conta que deseja selecionar: ')) - 1
     return usuario.getListaContaBancaria()[contaEscolhida]
+
+def verificarEmprestimo(valor,salario):
+    listaPrestacoes = []
+    for i in range(3,13):
+        if ((valor/i) * (1.03**i)) <= salario * 0.3:
+            total = 0
+            for j in range(1,i+1):
+                total += (valor/i) * (1.03 ** j)
+            listaPrestacoes.append({'valorInicial':valor/i,'vezes':i,'vezAtual':1,'total':total})
+    
+    return listaPrestacoes
+
+def emprestimo(contaBancaria,emprestimo):
+    for i in range(1,emprestimo['vezes']+1):
+        print(f'Parcela {i} - R$ {(emprestimo["valorInicial"]) * (1.03 ** i):.2f}')
+    print('Empréstimo realizado com sucesso!')
+    return contaBancaria.emprestimo(emprestimo)

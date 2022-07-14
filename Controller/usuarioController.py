@@ -2,13 +2,13 @@ class usuarioController:
 
     def verificarGenero(genero):
         while genero not in ['M', 'F']:
-            genero = input('Insira o gênero  do usuário corretamente: ').upper()
+            genero = input('Insira o gênero  do usuário corretamente (M/F): ').upper()
         return genero
 
     def verificarCpf(listaPessoas, cpf):
         while len(cpf) != 11:
             cpf = input('Insira um cpf válido: ')
-        while len([i for i in listaPessoas if i.cpf == cpf]) != 0:
+        while len([i for i in listaPessoas if i.getCpf() == cpf]) != 0:
             cpf = input('Insira um cpf ainda não cadastrado: ')
         return cpf
 

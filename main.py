@@ -13,12 +13,13 @@ def existeUsuarioCadastrado(cpf, senha, listaGeral):
         return False
 
 
-listaPessoas = list()
-listaGeral = list()
+listaUsuarios = list()
+listaFuncionarios = list()
+listaAdmin = list()
 conta = contaBancaria(4500.00, 'conta1')
 conta2 = contaBancaria(0, 'conta2')
 conta3 = contaPoupanca(1000, 'testePoupanca')
-conta4 = contaPoupanca(2000, "micaelGostosoRendeDinheiro")
+conta4 = contaPoupanca(2000, "micaelRendeDinheiro")
 eduardo = Usuario('Eduardo', 'a', '1', 'M', 18, 1000)
 eduardo.adicionarContaBancaria(conta)
 eduardo.adicionarContaBancaria(conta3)
@@ -27,15 +28,17 @@ micael.adicionarContaBancaria(conta2)
 micael.adicionarContaBancaria(conta4)
 manuella = Funcionario('Manuella', 'b', '2', 'F', 18)
 print('Olá, Bem-vindo(a) ao Banco')
-listaGeral.append(eduardo)
-listaGeral.append(manuella)
-listaGeral.append(micael)
-listaPessoas.append(eduardo)
-listaPessoas.append(micael)
+listaUsuarios.append(eduardo)
+listaUsuarios.append(micael)
+listaFuncionarios.append(manuella)
 
 
 def main():
     while True:
+        listaGeral = list()
+        listaGeral.extend(listaUsuarios)
+        listaGeral.extend(listaFuncionarios)
+        listaGeral.extend(listaAdmin)
         print('1 - Login')
         print('2 - Sair')
         acao = int(input('O que deseja fazer? '))
@@ -51,7 +54,7 @@ def main():
                 senha = input('Insira novamente sua senha: ')
                 login = existeUsuarioCadastrado(cpf, senha, listaGeral)
             if cpf != '0':
-                login.abrirTela(listaPessoas)
+                login.abrirTela(listaUsuarios)
         elif acao == 2:
             break
 
