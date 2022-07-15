@@ -1,7 +1,5 @@
-from datetime import datetime
 import Controller.contaBancariaController as contaBancariaController
 from Controller.usuarioController import usuarioController
-from Model.contaBancaria import contaBancaria
 from Model.usuario import Usuario
 
 class telaFuncionario:
@@ -13,7 +11,7 @@ class telaFuncionario:
             print('3 - Remover a conta de um usuário (total)')
             print('4 - Remover uma (1) conta bancária do usuário')
             print('5 - Abrir uma conta bancária para o usuário')
-            print('6 - Verificar a lista de Clientes')
+            print('6 - Ver a lista de Clientes')
             print('7 - Ver dados cadastrais de um usuário')
             print('8 - Logout ')
             acao = int(input('O que deseja fazer? '))
@@ -32,7 +30,7 @@ class telaFuncionario:
                 confirmarSenha = input(
                     'Confirme novamente a senha do usuário por favor: ')
                 senha = usuarioController.verificarSenha(senha, confirmarSenha)
-                cadastro = Usuario(nome, cpf, senha, genero, idade,salario)
+                cadastro = Usuario(nome,cpf,senha,genero,idade,salario)
                 listaPessoas.append(cadastro)
                 print('Cadastro concluído com sucesso')
             elif acao == 2:
