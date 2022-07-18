@@ -76,6 +76,9 @@ def main():
                 if login.getPermissao() == 'S':
                     print(f'Olá {login.nome}')
                     login.abrirTela(listaFuncionarios,listaUsuarios)
+                else:
+                    print(f'Olá {login.nome}')
+                    login.abrirTela(listaFuncionarios,listaUsuarios)
             elif cpf != '0':
                 print(f'Olá {login.nome}')
                 login.abrirTela(listaUsuarios)
