@@ -1,6 +1,6 @@
-import Controller.contaBancariaController as contaBancariaController
 from Controller.usuarioController import usuarioController
-import Model.funcionario as Funcionario
+import Model.funcionario
+
 
 class telaAdmin:
     def tela(admin, listaFuncionarios):
@@ -15,7 +15,8 @@ class telaAdmin:
             if acao == 1:
                 print('Insira seus dados abaixo:')
                 nome = input('Digite o nome completo do funcionário: ')
-                genero = input('Digite o gênero do funcionário (M/F): ').upper()
+                genero = input(
+                    'Digite o gênero do funcionário (M/F): ').upper()
                 genero = usuarioController.verificarGenero(genero)
                 cpf = input('Digite o cpf do funcionário: ')
                 cpf = usuarioController.verificarCpf(listaFuncionarios, cpf)
@@ -26,14 +27,17 @@ class telaAdmin:
                 confirmarSenha = input(
                     'Confirme novamente a senha do funcionário por favor: ')
                 senha = usuarioController.verificarSenha(senha, confirmarSenha)
-                permissao = input('O funcionário será um administrador do sistema (S/N)? ').upper()
+                permissao = input(
+                    'O funcionário será um administrador do sistema (S/N)? ').upper()
                 permissao = usuarioController.verificarSN(permissao)
-                cadastro = Funcionario(nome,cpf,senha,genero,idade,permissao)
+                cadastro = Model.funcionario.Funcionario(
+                    nome, cpf, senha, genero, idade, permissao)
                 listaFuncionarios.append(cadastro)
                 print('Cadastro concluído com sucesso')
             elif acao == 2:
                 cpf = input('Insira o CPF da conta que deseja remover: ')
-                funcionario = usuarioController.acharPeloCpf(cpf, listaFuncionarios)
+                funcionario = usuarioController.acharPeloCpf(
+                    cpf, listaFuncionarios)
                 if funcionario is None:
                     print('Funcionário não encontrado')
                 elif funcionario == admin:
@@ -47,24 +51,29 @@ class telaAdmin:
                         print('Conta removida com sucesso!')
             elif acao == 3:
                 cpf = input('Insira o CPF da conta que deseja alterar: ')
-                funcionario = usuarioController.acharPeloCpf(cpf, listaFuncionarios)
+                funcionario = usuarioController.acharPeloCpf(
+                    cpf, listaFuncionarios)
                 if funcionario is None:
                     print('Funcionário não encontrado')
                 elif funcionario == admin:
                     print('Não é possível alterar sua própria permissão')
                 elif funcionario.getPermissao() == 'S':
-                    mudar = input(f'Deseja retirar a permissão do funcionário {funcionario.getNome()} ? (S/N)').upper()
+                    mudar = input(
+                        f'Deseja retirar a permissão do funcionário {funcionario.getNome()} ? (S/N)').upper()
                     mudar = usuarioController.verificarSN(mudar)
                     if mudar == 'S':
                         funcionario.setPermissao('N')
                 else:
-                    mudar = input(f'Deseja dar permissão ao funcionário {funcionario.getNome()} ? (S/N)').upper()
+                    mudar = input(
+                        f'Deseja dar permissão ao funcionário {funcionario.getNome()} ? (S/N)').upper()
                     mudar = usuarioController.verificarSN(mudar)
                     if mudar == 'S':
                         funcionario.setPermissao('S')
             elif acao == 4:
-                cpf = input('Digite o CPF do Funcionário que voce quer ver os dados: ')
-                funcionario = usuarioController.acharPeloCpf(cpf, listaFuncionarios)
+                cpf = input(
+                    'Digite o CPF do Funcionário que voce quer ver os dados: ')
+                funcionario = usuarioController.acharPeloCpf(
+                    cpf, listaFuncionarios)
                 if funcionario is None:
                     print('Funcionário não encontrado')
                 else:
