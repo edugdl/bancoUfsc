@@ -71,19 +71,22 @@ class telaUsuario:
                     break
                 else:
                     valorEmprestimo = float(input('Digite o valor do empréstimo: '))
-                    salario = input(f'Seu salário continua sendo {usuario.getSalario()} ? (S/N): ').upper()
-                    salario = usuarioController.verificarSN(salario)
-                    if salario == 'N':
-                        salario = float(input('Digite seu novo salário: '))
-                        usuario.setSalario(salario)
-                    listaEmprestimo = contaBancariaController.verificarEmprestimo(valorEmprestimo,usuario.getSalario())
-                    if len(listaEmprestimo) == 0:
-                        print(f'Não é possível realizar um empréstimo de valor R$ {valorEmprestimo:.2f} em até 12x')
+                    if valorEmprestimo is None:
+                        print('Valor inválido')
                     else:
-                        for i,emprestimo in enumerate(listaEmprestimo):
-                            print(f'{i+1} - {emprestimo["vezes"]}x resultado em um total de {emprestimo["total"]:.2f}')
-                        escolhaEmprestimo = int(input('Escolha uma opção de empréstimo: '))
-                        contaBancariaController.emprestimo(contaEscolhida,listaEmprestimo[escolhaEmprestimo-1])
+                        salario = input(f'Seu salário continua sendo {usuario.getSalario()} ? (S/N): ').upper()
+                        salario = usuarioController.verificarSN(salario)
+                        if salario == 'N':
+                            salario = float(input('Digite seu novo salário: '))
+                            usuario.setSalario(salario)
+                        listaEmprestimo = contaBancariaController.verificarEmprestimo(valorEmprestimo,usuario.getSalario())
+                        if len(listaEmprestimo) == 0:
+                            print(f'Não é possível realizar um empréstimo de valor R$ {valorEmprestimo:.2f} em até 12x')
+                        else:
+                            for i,emprestimo in enumerate(listaEmprestimo):
+                                print(f'{i+1} - {emprestimo["vezes"]}x resultado em um total de {emprestimo["total"]:.2f}')
+                            escolhaEmprestimo = int(input('Escolha uma opção de empréstimo: '))
+                            contaBancariaController.emprestimo(contaEscolhida,listaEmprestimo[escolhaEmprestimo-1])
             elif acao == 5:
                 contaEscolhida = contaBancariaController.selecionarConta(
                     usuario)
@@ -101,12 +104,12 @@ class telaUsuario:
                         input('Insira o valor o qual deseja transferir: '))
                     transferencia = contaBancariaController.transferir(
                         contaEscolhida, recebe, valor)
-                    if transferencia:
+                    if transferencia > 0:
                         print(
                             f'Transferência de {usuario.getNome()} para {transferencia.getNome()} no valor de R$ {valor:.2f} concluída com sucesso!')
                     elif transferencia is None:
                         print('Saldo na conta insuficiente')
-                    else:
+                    elif not transferencia:
                         print('A pessoa selecionada não possui uma conta')
             elif acao == 6:
                 contaEscolhida = contaBancariaController.selecionarConta(

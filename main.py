@@ -49,6 +49,9 @@ def main():
         print('1 - Login')
         print('2 - Sair')
         acao = int(input('O que deseja fazer? '))
+        while not(acao == 1 or acao == 2):
+            print('Digite um valor correto')
+            acao = int(input('O que deseja fazer? '))
         if acao == 1:
             cpf = input('Insira seu cpf: ')
             senha = input('Insira sua senha: ')
