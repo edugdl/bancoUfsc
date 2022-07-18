@@ -6,12 +6,17 @@ from Model.funcionario import Funcionario
 def existeUsuarioCadastrado(cpf, senha, listaGeral):
     for pessoa in listaGeral:
         if pessoa.cpf == cpf and pessoa.senha == senha:
-            print(f'Olá {pessoa.nome}')
             return pessoa
     else:
         print('Cpf e/ou senha incorretos!')
         return False
 
+def existeUsuarioNasDuasListas(cpf,listaGeral):
+    contador = 0
+    for pessoa in listaGeral:
+        if pessoa.cpf == cpf:
+            contador += 1
+    return contador
 
 listaUsuarios = list()
 listaFuncionarios = list()
@@ -26,11 +31,13 @@ eduardo.adicionarContaBancaria(conta3)
 micael = Usuario('Micael', 'c', '3', 'M', 20, 2000)
 micael.adicionarContaBancaria(conta2)
 micael.adicionarContaBancaria(conta4)
-manuella = Funcionario('Manuella', 'b', '2', 'F', 18,True)
+manuella = Funcionario('Manuella', 'b', '2', 'F', 18,'S')
+manuella2 = Usuario('Manuella', 'b', '2', 'F', 18,1000)
 print('Olá, Bem-vindo(a) ao Banco')
 listaUsuarios.append(eduardo)
 listaUsuarios.append(micael)
 listaFuncionarios.append(manuella)
+listaUsuarios.append(manuella2)
 
 
 def main():
@@ -53,7 +60,24 @@ def main():
                     break
                 senha = input('Insira novamente sua senha: ')
                 login = existeUsuarioCadastrado(cpf, senha, listaGeral)
-            if cpf != '0':
+            if existeUsuarioNasDuasListas(cpf,listaGeral) > 1:
+                print(f'Olá {login.nome}')
+                acesso = int(input('1-Usuário\n2-Funcionário\nInsira como deseja acessar: '))
+                if acesso == 1:
+                    login = existeUsuarioCadastrado(cpf,senha,listaUsuarios)
+                    login.abrirTela(listaUsuarios)
+                elif acesso == 2:
+                    login = existeUsuarioCadastrado(cpf,senha,listaFuncionarios)
+                    if login.getPermissao() == 'S':
+                        login.abrirTela(listaFuncionarios,listaUsuarios)
+                    else:
+                        login.abrirTela(listaUsuarios)
+            elif login in listaFuncionarios:
+                if login.getPermissao() == 'S':
+                    print(f'Olá {login.nome}')
+                    login.abrirTela(listaFuncionarios,listaUsuarios)
+            elif cpf != '0':
+                print(f'Olá {login.nome}')
                 login.abrirTela(listaUsuarios)
         elif acao == 2:
             break
