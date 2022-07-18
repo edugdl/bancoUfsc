@@ -71,8 +71,8 @@ class telaUsuario:
                     break
                 else:
                     valorEmprestimo = float(input('Digite o valor do empréstimo: '))
-                    if valorEmprestimo is None:
-                        print('Valor inválido')
+                    if valorEmprestimo < 0:
+                        print('Valor de empréstimo inválido')
                     else:
                         salario = input(f'Seu salário continua sendo {usuario.getSalario()} ? (S/N): ').upper()
                         salario = usuarioController.verificarSN(salario)

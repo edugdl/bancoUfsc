@@ -55,8 +55,6 @@ def verificarEmprestimo(valor,salario):
     return listaPrestacoes
 
 def emprestimo(contaBancaria,emprestimo):
-    if emprestimo < 0 :
-        return None
     for i in range(1,emprestimo['vezes']+1):
         print(f'Parcela {i} - R$ {(emprestimo["valorInicial"]) * (1.03 ** i):.2f}')
     print('Empréstimo realizado com sucesso!')
