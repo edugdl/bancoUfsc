@@ -16,12 +16,14 @@ def transferir(manda, recebePessoa, valor):
     print('Escolha abaixo a conta que irá receber o dinheiro')
     recebe = selecionarConta(recebePessoa)
     if recebe is None:
+        print('A pessoa selecionada não possui uma conta')
         return False
     if valor < 0:
         print('Valor de transferência inválido')
-        return -1
+        return False
     if manda.getSaldo() < valor:
-        return None
+        print('Saldo na conta insuficiente')
+        return False
     manda.transferir(recebe, valor)
     return recebePessoa
 
