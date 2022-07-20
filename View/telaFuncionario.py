@@ -2,6 +2,7 @@ import Controller.contaBancariaController as contaBancariaController
 from Controller.usuarioController import usuarioController
 from Model.usuario import Usuario
 
+
 class telaFuncionario:
     def tela(funcionario, listaPessoas):
         print(10*'-'+' Tela Principal do Funcionário '+'-'*10)
@@ -25,12 +26,13 @@ class telaFuncionario:
                 idade = int(input('Digite a idade do usuário: '))
                 if usuarioController.verificarIdade(idade) is None:
                     break
-                salario = float(input('Qual é seu salário mensal atualmente?: '))
+                salario = float(
+                    input('Qual é seu salário mensal atualmente?: '))
                 senha = input('Digite a senha do usuário: ')
                 confirmarSenha = input(
                     'Confirme novamente a senha do usuário por favor: ')
                 senha = usuarioController.verificarSenha(senha, confirmarSenha)
-                cadastro = Usuario(nome,cpf,senha,genero,idade,salario)
+                cadastro = Usuario(nome, cpf, senha, genero, idade, salario)
                 listaPessoas.append(cadastro)
                 print('Cadastro concluído com sucesso')
             elif acao == 2:
@@ -39,17 +41,16 @@ class telaFuncionario:
                 usuario = usuarioController.acharPeloCpf(cpf, listaPessoas)
                 if usuario is None:
                     print('Usuário não encontrado')
-                elif contaEscolhida is None:
-                    print('Usuário não possui conta cadastrada')
                 else:
                     contaEscolhida = contaBancariaController.selecionarConta(
-                    usuario)
+                        usuario)
                     if contaEscolhida is None:
                         print('Usuário não possui conta')
                     else:
                         historico = contaEscolhida.getHistorico()
                         print('-'*47)
-                        print(f'Histórico de {contaEscolhida.getNomeConta()}\n')
+                        print(
+                            f'Histórico de {contaEscolhida.getNomeConta()} do usuário {usuario.getNome()}\n')
                         if len(historico) == 0:
                             print('Ainda não foi realizada nenhuma transação')
                         else:
@@ -76,11 +77,14 @@ class telaFuncionario:
                 if usuario is None:
                     print('Usuário não encontrado')
                 else:
-                    contaEscolhida = contaBancariaController.selecionarConta(usuario)
-                    verificar = input(f'Deseja realmente remover a conta {contaEscolhida.getNomeConta()} do usuário {usuario.getNome()} ? (S/N) ').upper()
+                    contaEscolhida = contaBancariaController.selecionarConta(
+                        usuario)
+                    verificar = input(
+                        f'Deseja realmente remover a conta {contaEscolhida.getNomeConta()} do usuário {usuario.getNome()} ? (S/N) ').upper()
                     verificar = usuarioController.verificarSN(verificar)
                     if verificar == 'S':
-                        usuarioController.removerContaBancaria(usuario,contaEscolhida)
+                        usuarioController.removerContaBancaria(
+                            usuario, contaEscolhida)
                         print('Conta removida com sucesso!')
 
             elif acao == 5:
@@ -96,15 +100,19 @@ class telaFuncionario:
                     tipoConta = usuarioController.verificarConta(tipoConta)
                     saldo = float(
                         input('Insira o saldo que o usuário irá começar na conta: '))
-                    nomeConta = input('Digite o nome da conta (para fins de identificação): ')
+                    nomeConta = input(
+                        'Digite o nome da conta (para fins de identificação): ')
                     print(
                         f'Conta criada com sucesso para o usuário {usuario.getNome()}!')
-                    contaBancariaController.criarConta(usuario, tipoConta, saldo, nomeConta)
+                    contaBancariaController.criarConta(
+                        usuario, tipoConta, saldo, nomeConta)
             elif acao == 6:
                 for pessoa in listaPessoas:
-                    print(f'Nome: {pessoa.getNome()}, Cpf: {pessoa.getCpf()}\n')
+                    print(
+                        f'Nome: {pessoa.getNome()}, Cpf: {pessoa.getCpf()}\n')
             elif acao == 7:
-                cpf = input('Digite o CPF do usuário que voce quer ver os dados: ')
+                cpf = input(
+                    'Digite o CPF do usuário que voce quer ver os dados: ')
                 usuario = usuarioController.acharPeloCpf(cpf, listaPessoas)
                 if usuario is None:
                     print('Usuário não encontrado')
